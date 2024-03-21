@@ -1,0 +1,49 @@
+{
+  "name": "auxhealth-interview",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "precodegen": "node ./lib/pre-codegen.mjs",
+    "codegen": "openapi-rq --input ./openapi.json --output ./client --client axios --useUnionTypes --exportSchemas true",
+    "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn api.index:app --reload",
+    "next-dev": "next dev",
+    "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@radix-ui/react-icons": "^1.3.0",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@tanstack/react-query": "^5.28.6",
+    "@tanstack/react-query-devtools": "^5.28.6",
+    "@tanstack/react-query-next-experimental": "^5.28.6",
+    "@types/node": "20.11.30",
+    "@types/react": "18.2.67",
+    "@types/react-dom": "18.2.22",
+    "autoprefixer": "10.4.19",
+    "axios": "^1.6.8",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "concurrently": "^8.2.2",
+    "eslint": "8.57.0",
+    "eslint-config-next": "14.1.4",
+    "javascript-time-ago": "^2.5.9",
+    "lucide-react": "^0.359.0",
+    "next": "14.1.4",
+    "postcss": "8.4.38",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-intersection-observer": "^9.8.1",
+    "react-time-ago": "^7.3.1",
+    "superjson": "^2.2.1",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss": "3.4.1",
+    "tailwindcss-animate": "^1.0.7",
+    "typescript": "5.4.3"
+  },
+  "devDependencies": {
+    "@7nohe/openapi-react-query-codegen": "^0.5.3",
+    "node-fetch": "^3.3.2"
+  }
+}

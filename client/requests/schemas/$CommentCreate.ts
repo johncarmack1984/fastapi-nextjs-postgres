@@ -1,0 +1,21 @@
+/* generated using openapi-typescript-codegen -- do not edit */
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+export const $CommentCreate = {
+    properties: {
+        display_name: {
+            type: 'string',
+            isRequired: true,
+        },
+        text: {
+            type: 'string',
+            isRequired: true,
+        },
+        created_at: {
+            type: 'string',
+            isRequired: true,
+            format: 'date-time',
+        },
+    },
+} as const;
