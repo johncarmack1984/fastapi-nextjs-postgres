@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Link from "next/link";
 import { usePostsServiceReadPostKey } from "@/client/queries";
 import { Post } from "@/client/requests/models/Post";
@@ -5,12 +6,20 @@ import { PostsService } from "@/client/requests/services/PostsService";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import ReactTimeAgo from "react-time-ago";
 
+import { cn } from "@/lib/utils";
 import { HeartIcon } from "./icons/heart-icon";
 import { ReplyIcon } from "./icons/reply-icon";
 import { SaveIcon } from "./icons/save-icon";
 import { Button } from "./ui/button";
 
 function HugPostButton({ id }: { id: number }) {
+  const [isClicked, setIsClicked] = useState(false);
+
+  const handleClick = () => {
+    setIsClicked(true);
+    mutate(id);
+    setTimeout(() => setIsClicked(false), 1000);
+  };
   const queryClient = useQueryClient();
   const queryKey = [usePostsServiceReadPostKey, { id }];
 
@@ -28,11 +37,19 @@ function HugPostButton({ id }: { id: number }) {
   };
   return (
     <Button
-      onClick={() => mutate(id)}
+      onClick={handleClick}
       variant="ghost"
-      className="flex items-center space-x-2"
+      className={cn(
+        "flex items-center space-x-2 transition-all",
+        isClicked && "animate-sunburst",
+      )}
     >
-      <HeartIcon className="size-4" />
+      <HeartIcon
+        className={cn(
+          "size-4 transition-all duration-300",
+          isClicked && "animate-bounce-fade-in fill-red-500",
+        )}
+      />
       <span>{num_hugs} Hugs</span>
     </Button>
   );

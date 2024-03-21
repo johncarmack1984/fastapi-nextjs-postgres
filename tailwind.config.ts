@@ -1,5 +1,5 @@
-import { fontFamily } from "tailwindcss/defaultTheme";
 import type { Config } from "tailwindcss";
+import { fontFamily } from "tailwindcss/defaultTheme";
 
 const config = {
   darkMode: ["class"],
@@ -78,10 +78,33 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "bounce-fade-in": {
+          "0%": {
+            transform: "scale(0.5)",
+            opacity: "0",
+          },
+          "100%": {
+            transform: "scale(1)",
+            opacity: "1",
+          },
+        },
+        sunburst: {
+          "0%": {
+            "box-shadow": "0 0 0 0 rgba(255, 0, 0, 0.7)",
+          },
+          "70%": {
+            "box-shadow": "0 0 0 20px rgba(255, 0, 0, 0)",
+          },
+          "100%": {
+            "box-shadow": "0 0 0 30px rgba(255, 0, 0, 0)",
+          },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "bounce-fade-in": "bounce-fade-in 0.6s ease-out",
+        sunburst: "sunburst 1s ease-out",
       },
     },
   },
