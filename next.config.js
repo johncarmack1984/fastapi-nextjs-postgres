@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  experimental: {
+    ppr: true,
+  },
   webpack: (config) => {
     if (config.name === "server")
       config.optimization.concatenateModules = false;

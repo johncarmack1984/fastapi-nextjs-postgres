@@ -51,6 +51,26 @@ export class PostsService {
         });
     }
     /**
+     * Hug Post
+     * @param postId
+     * @returns Post Successful Response
+     * @throws ApiError
+     */
+    public static hugPost(
+        postId: number,
+    ): CancelablePromise<Post> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/posts/{post_id}/hug',
+            path: {
+                'post_id': postId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Read Post
      * @param postId
      * @returns Post Successful Response
@@ -106,26 +126,6 @@ export class PostsService {
         return __request(OpenAPI, {
             method: 'DELETE',
             url: '/api/posts/{post_id}',
-            path: {
-                'post_id': postId,
-            },
-            errors: {
-                422: `Validation Error`,
-            },
-        });
-    }
-    /**
-     * Hug Post
-     * @param postId
-     * @returns Post Successful Response
-     * @throws ApiError
-     */
-    public static hugPost(
-        postId: number,
-    ): CancelablePromise<Post> {
-        return __request(OpenAPI, {
-            method: 'PATCH',
-            url: '/api/posts/{post_id}/hug',
             path: {
                 'post_id': postId,
             },

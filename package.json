@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "precodegen": "node ./lib/pre-codegen.mjs",
-    "codegen": "openapi-rq --input ./openapi.json --output ./client --client axios --useUnionTypes --exportSchemas true",
-    "fastapi-dev": "pip3 install -r requirements.txt && python3 -m uvicorn api.index:app --reload",
+    "codegen": "openapi-rq --input ./openapi.json --output ./client --client fetch --useUnionTypes --exportSchemas true",
+    "fastapi-dev": "pip3 install -q -r requirements.txt && python3 -m uvicorn api.index:app --reload",
     "next-dev": "next dev",
     "dev": "concurrently \"npm run next-dev\" \"npm run fastapi-dev\"",
     "build": "next build",
@@ -29,10 +29,11 @@
     "eslint": "8.57.0",
     "eslint-config-next": "14.1.4",
     "javascript-time-ago": "^2.5.9",
-    "lucide-react": "^0.359.0",
-    "next": "14.1.4",
+    "lucide-react": "^0.360.0",
+    "next": "canary",
     "postcss": "8.4.38",
-    "react": "18.2.0",
+    "prettier-plugin-tailwindcss": "^0.5.12",
+    "react": "canary",
     "react-dom": "18.2.0",
     "react-intersection-observer": "^9.8.1",
     "react-time-ago": "^7.3.1",
@@ -44,6 +45,7 @@
   },
   "devDependencies": {
     "@7nohe/openapi-react-query-codegen": "^0.5.3",
+    "@ianvs/prettier-plugin-sort-imports": "^4.2.1",
     "node-fetch": "^3.3.2"
   }
 }

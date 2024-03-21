@@ -101,6 +101,48 @@
         }
       }
     },
+    "/api/posts/{post_id}/hug": {
+      "patch": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Hug Post",
+        "operationId": "hug_post",
+        "parameters": [
+          {
+            "name": "post_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Post Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/posts/{post_id}": {
       "get": {
         "tags": [
@@ -198,48 +240,6 @@
         ],
         "summary": "Delete Post",
         "operationId": "delete_post",
-        "parameters": [
-          {
-            "name": "post_id",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "type": "integer",
-              "title": "Post Id"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Successful Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Post"
-                }
-              }
-            }
-          },
-          "422": {
-            "description": "Validation Error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/HTTPValidationError"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/api/posts/{post_id}/hug": {
-      "patch": {
-        "tags": [
-          "posts"
-        ],
-        "summary": "Hug Post",
-        "operationId": "hug_post",
         "parameters": [
           {
             "name": "post_id",

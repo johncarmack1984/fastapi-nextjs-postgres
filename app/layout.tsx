@@ -1,9 +1,11 @@
 import "@/styles/globals.css";
+
 import { Karla as FontSans } from "next/font/google";
+import { cva } from "class-variance-authority";
 
 import { cn } from "@/lib/utils";
-import { TopBar } from "@/components/top-bar";
 import { Sidebar } from "@/components/sidebar";
+import { TopBar } from "@/components/top-bar";
 import Providers from "./providers";
 
 const fontSans = FontSans({ subsets: ["latin"], variable: "--font-sans" });
@@ -13,6 +15,10 @@ export const metadata = {
   description: "Created with FastAPI and Next.js; deployed on Vercel.",
 };
 
+const bodyVariants = cva(
+  "min-h-screen [background-color:#F0F0F4] font-sans antialiased",
+);
+
 export default function RootLayout({
   children,
 }: {
@@ -20,15 +26,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "min-h-screen [background-color:#F0F0F4] font-sans antialiased",
-          fontSans.variable
-        )}
-      >
+      <body className={cn(bodyVariants(), fontSans.variable)}>
         <Providers>
           <TopBar />
-          <main className="flex items-center mx-auto flex-col-reverse lg:flex-row lg:items-start gap-4 p-6">
+          <main className="mx-auto flex flex-col-reverse items-center gap-4 p-6 lg:flex-row lg:items-start">
             {children}
             <Sidebar />
           </main>

@@ -29,6 +29,13 @@ def read_posts(skip: int = 0, limit: int = 10, db: Session = Depends(get_db)):
     posts = crud.get_posts(db, skip=skip, limit=limit)
     return posts
 
+@app.patch("/api/posts/{post_id}/hug", response_model=schemas.Post, tags=["posts"])
+def hug_post(post_id: int, db: Session = Depends(get_db)):
+    db_post = crud.hug_post(db, post_id=post_id)
+    if db_post is None:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return db_post
+
 @app.get("/api/posts/{post_id}", response_model=schemas.Post, tags=["posts"])
 def read_post(post_id: int, db: Session = Depends(get_db)):
     db_post = crud.get_post(db, post_id=post_id)
@@ -50,13 +57,6 @@ def update_post(post_id: int, post: schemas.PostCreate, db: Session = Depends(ge
 @app.delete("/api/posts/{post_id}", response_model=schemas.Post, tags=["posts"])
 def delete_post(post_id: int, db: Session = Depends(get_db)):
     db_post = crud.delete_post(db, post_id=post_id)
-    if db_post is None:
-        raise HTTPException(status_code=404, detail="Post not found")
-    return db_post
-
-@app.patch("/api/posts/{post_id}/hug", response_model=schemas.Post, tags=["posts"])
-def hug_post(post_id: int, db: Session = Depends(get_db)):
-    db_post = crud.increment_post_hugs(db, post_id=post_id)
     if db_post is None:
         raise HTTPException(status_code=404, detail="Post not found")
     return db_post

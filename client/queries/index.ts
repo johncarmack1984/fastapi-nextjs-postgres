@@ -27,6 +27,15 @@ export const usePostsServiceCreatePost = <TData = PostsServiceCreatePostMutation
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
     requestBody: PostCreate;
 }, TContext>({ mutationFn: ({ requestBody }) => PostsService.createPost(requestBody) as unknown as Promise<TData>, ...options });
+export type PostsServiceHugPostMutationResult = Awaited<ReturnType<typeof PostsService.hugPost>>;
+/**
+ * Hug Post
+ */
+export const usePostsServiceHugPost = <TData = PostsServiceHugPostMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+    postId: number;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+    postId: number;
+}, TContext>({ mutationFn: ({ postId }) => PostsService.hugPost(postId) as unknown as Promise<TData>, ...options });
 export type PostsServiceReadPostDefaultResponse = Awaited<ReturnType<typeof PostsService.readPost>>;
 export type PostsServiceReadPostQueryResult<TData = PostsServiceReadPostDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const usePostsServiceReadPostKey = "PostsServiceReadPost";
@@ -56,15 +65,6 @@ export const usePostsServiceDeletePost = <TData = PostsServiceDeletePostMutation
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
     postId: number;
 }, TContext>({ mutationFn: ({ postId }) => PostsService.deletePost(postId) as unknown as Promise<TData>, ...options });
-export type PostsServiceHugPostMutationResult = Awaited<ReturnType<typeof PostsService.hugPost>>;
-/**
- * Hug Post
- */
-export const usePostsServiceHugPost = <TData = PostsServiceHugPostMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
-    postId: number;
-}, TContext>, "mutationFn">) => useMutation<TData, TError, {
-    postId: number;
-}, TContext>({ mutationFn: ({ postId }) => PostsService.hugPost(postId) as unknown as Promise<TData>, ...options });
 export type CommentsServiceReadCommentsDefaultResponse = Awaited<ReturnType<typeof CommentsService.readComments>>;
 export type CommentsServiceReadCommentsQueryResult<TData = CommentsServiceReadCommentsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCommentsServiceReadCommentsKey = "CommentsServiceReadComments";
