@@ -2,7 +2,7 @@ from sqlalchemy.orm import Session
 from . import models, schemas
 
 def get_posts(db: Session, skip: int = 0, limit: int = 100):
-    return db.query(models.Post).order_by(models.Post.created_at.asc()).offset(skip).limit(limit).all()
+    return db.query(models.Post).order_by(models.Post.created_at.desc()).offset(skip).limit(limit).all()
 
 def hug_post(db: Session, post_id: int):
     db_post = db.query(models.Post).filter(models.Post.id == post_id).first()
