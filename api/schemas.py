@@ -6,6 +6,7 @@ class CommentBase(BaseModel):
     display_name: str
     text: str
     created_at: datetime
+    num_hugs: int
 
 class CommentCreate(CommentBase):
     pass

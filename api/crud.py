@@ -41,6 +41,14 @@ def delete_post(db: Session, post_id: int):
 def get_comments(db: Session, post_id: int):
     return db.query(models.Comment).filter(models.Comment.post_id == post_id).all()
 
+def hug_comment(db: Session, comment_id: int):
+    db_comment = db.query(models.Comment).filter(models.Comment.id == comment_id).first()
+    if db_comment:
+        db_comment.num_hugs += 1
+        db.commit()
+        db.refresh(db_comment)
+    return db_comment
+
 def create_comment(db: Session, comment: schemas.CommentCreate, post_id: int):
     db_comment = models.Comment(**comment.dict(), post_id=post_id)
     db.add(db_comment)

@@ -25,6 +25,7 @@ class Comment(Base):
     display_name = Column(String, nullable=False)
     text = Column(Text, nullable=False)
     created_at = Column(DateTime(timezone=True), nullable=False)
+    num_hugs = Column(Integer, nullable=False)
     post_id = Column(Integer, ForeignKey('auxhealth_posts.id'), nullable=False)
 
     children = relationship("Comment", backref=backref('parent', remote_side=[id]))

@@ -69,6 +69,13 @@ def read_comments(post_id: int, db: Session = Depends(get_db)):
 def create_comment(post_id: int, comment: schemas.CommentCreate, db: Session = Depends(get_db)):
     return crud.create_comment(db=db, post_id=post_id, comment=comment)
 
+@app.patch("/api/comments/{comment_id}/hug", response_model=schemas.Comment, tags=["comments"])
+def hug_comment(comment_id: int, db: Session = Depends(get_db)):
+    db_comment = crud.hug_comment(db, comment_id=comment_id)
+    if db_comment is None:
+        raise HTTPException(status_code=404, detail="Comment not found")
+    return db_comment
+
 @app.put("/api/comments/{comment_id}", response_model=schemas.Comment, tags=["comments"])
 def update_comment(comment_id: int, comment: schemas.CommentCreate, db: Session = Depends(get_db)):
     db_comment = crud.update_comment(db=db, comment_id=comment_id, updated_comment=comment)

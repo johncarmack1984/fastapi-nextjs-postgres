@@ -371,6 +371,48 @@
         }
       }
     },
+    "/api/comments/{comment_id}/hug": {
+      "patch": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Hug Comment",
+        "operationId": "hug_comment",
+        "parameters": [
+          {
+            "name": "comment_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Comment Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Comment"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/comments/{comment_id}": {
       "put": {
         "tags": [
@@ -481,6 +523,10 @@
             "format": "date-time",
             "title": "Created At"
           },
+          "num_hugs": {
+            "type": "integer",
+            "title": "Num Hugs"
+          },
           "id": {
             "type": "integer",
             "title": "Id"
@@ -506,6 +552,7 @@
           "display_name",
           "text",
           "created_at",
+          "num_hugs",
           "id",
           "post_id"
         ],
@@ -525,13 +572,18 @@
             "type": "string",
             "format": "date-time",
             "title": "Created At"
+          },
+          "num_hugs": {
+            "type": "integer",
+            "title": "Num Hugs"
           }
         },
         "type": "object",
         "required": [
           "display_name",
           "text",
-          "created_at"
+          "created_at",
+          "num_hugs"
         ],
         "title": "CommentCreate"
       },

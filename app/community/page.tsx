@@ -1,11 +1,14 @@
 "use client";
 
-import { usePostsServiceReadPostKey } from "@/client/queries";
+import {
+  useCommentsServiceReadCommentsKey,
+  usePostsServiceReadPostKey,
+} from "@/client/queries";
 import { Post, PostsService } from "@/client/requests";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 
 import InfiniteScrollLoader from "@/components/infinite-scroll-loader";
-import { PostPreview } from "@/components/post-preview";
+import { PostPreview } from "@/components/post-preview/post-preview";
 import { useInfinitePostsOptions } from "./getPosts";
 
 export default function PostsPage() {
@@ -17,6 +20,12 @@ export default function PostsPage() {
         [usePostsServiceReadPostKey, { id: post.id }],
         post,
       );
+      post.comments?.forEach((comment) => {
+        queryClient.setQueryData(
+          [useCommentsServiceReadCommentsKey, { id: comment.id }],
+          comment,
+        );
+      });
     });
     return posts;
   };

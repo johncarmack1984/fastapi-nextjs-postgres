@@ -6,6 +6,7 @@ export type Comment = {
     display_name: string;
     text: string;
     created_at: string;
+    num_hugs: number;
     id: number;
     parent_id?: (number | null);
     post_id: number;

@@ -53,6 +53,26 @@ export class CommentsService {
         });
     }
     /**
+     * Hug Comment
+     * @param commentId
+     * @returns Comment Successful Response
+     * @throws ApiError
+     */
+    public static hugComment(
+        commentId: number,
+    ): CancelablePromise<Comment> {
+        return __request(OpenAPI, {
+            method: 'PATCH',
+            url: '/api/comments/{comment_id}/hug',
+            path: {
+                'comment_id': commentId,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
+    /**
      * Update Comment
      * @param commentId
      * @param requestBody

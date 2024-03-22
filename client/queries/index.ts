@@ -85,6 +85,15 @@ export const useCommentsServiceCreateComment = <TData = CommentsServiceCreateCom
     postId: number;
     requestBody: CommentCreate;
 }, TContext>({ mutationFn: ({ postId, requestBody }) => CommentsService.createComment(postId, requestBody) as unknown as Promise<TData>, ...options });
+export type CommentsServiceHugCommentMutationResult = Awaited<ReturnType<typeof CommentsService.hugComment>>;
+/**
+ * Hug Comment
+ */
+export const useCommentsServiceHugComment = <TData = CommentsServiceHugCommentMutationResult, TError = unknown, TContext = unknown>(options?: Omit<UseMutationOptions<TData, TError, {
+    commentId: number;
+}, TContext>, "mutationFn">) => useMutation<TData, TError, {
+    commentId: number;
+}, TContext>({ mutationFn: ({ commentId }) => CommentsService.hugComment(commentId) as unknown as Promise<TData>, ...options });
 export type CommentsServiceUpdateCommentMutationResult = Awaited<ReturnType<typeof CommentsService.updateComment>>;
 /**
  * Update Comment

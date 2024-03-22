@@ -17,5 +17,9 @@ export const $CommentCreate = {
             isRequired: true,
             format: 'date-time',
         },
+        num_hugs: {
+            type: 'number',
+            isRequired: true,
+        },
     },
 } as const;

@@ -6,5 +6,6 @@ export type CommentCreate = {
     display_name: string;
     text: string;
     created_at: string;
+    num_hugs: number;
 };
 

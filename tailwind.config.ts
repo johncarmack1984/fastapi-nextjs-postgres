@@ -78,6 +78,14 @@ const config = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "preview-accordion-down": {
+          from: { height: "100" },
+          to: { height: "var(--radix-accordion-content-height)" },
+        },
+        "preview-accordion-up": {
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "100" },
+        },
         "bounce-fade-in": {
           "0%": {
             transform: "scale(0.5)",
@@ -103,6 +111,8 @@ const config = {
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "preview-accordion-down": "preview-accordion-down 0.2s ease-out",
+        "preview-accordion-up": "preview-accordion-up 0.2s ease-out",
         "bounce-fade-in": "bounce-fade-in 0.6s ease-out",
         sunburst: "sunburst 1s ease-out",
       },
