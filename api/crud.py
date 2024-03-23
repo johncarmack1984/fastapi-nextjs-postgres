@@ -4,6 +4,9 @@ from . import models, schemas
 def get_posts(db: Session, skip: int = 0, limit: int = 100):
     return db.query(models.Post).order_by(models.Post.created_at.desc()).offset(skip).limit(limit).all()
 
+def get_post_by_url(db: Session, post_url: str):
+    return db.query(models.Post).filter(models.Post.post_url == post_url).first()
+
 def hug_post(db: Session, post_id: int):
     db_post = db.query(models.Post).filter(models.Post.id == post_id).first()
     if db_post:

@@ -65,6 +65,15 @@ export const usePostsServiceDeletePost = <TData = PostsServiceDeletePostMutation
 }, TContext>, "mutationFn">) => useMutation<TData, TError, {
     postId: number;
 }, TContext>({ mutationFn: ({ postId }) => PostsService.deletePost(postId) as unknown as Promise<TData>, ...options });
+export type PostsServiceReadPostByUrlDefaultResponse = Awaited<ReturnType<typeof PostsService.readPostByUrl>>;
+export type PostsServiceReadPostByUrlQueryResult<TData = PostsServiceReadPostByUrlDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
+export const usePostsServiceReadPostByUrlKey = "PostsServiceReadPostByUrl";
+/**
+ * Read Post By Url
+ */
+export const usePostsServiceReadPostByUrl = <TData = PostsServiceReadPostByUrlDefaultResponse, TError = unknown, TQueryKey extends Array<unknown> = unknown[]>({ postUrl }: {
+    postUrl: string;
+}, queryKey?: TQueryKey, options?: Omit<UseQueryOptions<TData, TError>, "queryKey" | "queryFn" | "initialData">) => useQuery<TData, TError>({ queryKey: [usePostsServiceReadPostByUrlKey, ...(queryKey ?? [{ postUrl }])], queryFn: () => PostsService.readPostByUrl(postUrl) as TData, ...options });
 export type CommentsServiceReadCommentsDefaultResponse = Awaited<ReturnType<typeof CommentsService.readComments>>;
 export type CommentsServiceReadCommentsQueryResult<TData = CommentsServiceReadCommentsDefaultResponse, TError = unknown> = UseQueryResult<TData, TError>;
 export const useCommentsServiceReadCommentsKey = "CommentsServiceReadComments";

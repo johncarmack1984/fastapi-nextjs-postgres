@@ -134,4 +134,24 @@ export class PostsService {
             },
         });
     }
+    /**
+     * Read Post By Url
+     * @param postUrl
+     * @returns Post Successful Response
+     * @throws ApiError
+     */
+    public static readPostByUrl(
+        postUrl: string,
+    ): CancelablePromise<Post> {
+        return __request(OpenAPI, {
+            method: 'GET',
+            url: '/api/posts/url/{post_url}',
+            path: {
+                'post_url': postUrl,
+            },
+            errors: {
+                422: `Validation Error`,
+            },
+        });
+    }
 }

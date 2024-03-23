@@ -275,6 +275,48 @@
         }
       }
     },
+    "/api/posts/url/{post_url}": {
+      "get": {
+        "tags": [
+          "posts"
+        ],
+        "summary": "Read Post By Url",
+        "operationId": "read_post_by_url",
+        "parameters": [
+          {
+            "name": "post_url",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Post Url"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/posts/{post_id}/comments": {
       "get": {
         "tags": [

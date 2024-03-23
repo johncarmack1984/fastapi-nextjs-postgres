@@ -3,9 +3,14 @@ from fastapi.routing import APIRoute
 from sqlalchemy.orm import Session
 from typing import List
 from dotenv import load_dotenv
+from urllib.parse import unquote
+import logging
 
 from . import crud, models, schemas
 from .database import SessionLocal, engine
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 load_dotenv()
 
@@ -39,6 +44,16 @@ def hug_post(post_id: int, db: Session = Depends(get_db)):
 @app.get("/api/posts/{post_id}", response_model=schemas.Post, tags=["posts"])
 def read_post(post_id: int, db: Session = Depends(get_db)):
     db_post = crud.get_post(db, post_id=post_id)
+    if db_post is None:
+        raise HTTPException(status_code=404, detail="Post not found")
+    return db_post
+
+@app.get("/api/posts/url/{post_url}", response_model=schemas.Post, tags=["posts"])
+def read_post_by_url(post_url: str, db: Session = Depends(get_db)):
+    logger.info(post_url)
+    # decoded_url = unquote(post_url)
+    # logger.info(decoded_url)
+    db_post = crud.get_post_by_url(db, post_url=post_url)
     if db_post is None:
         raise HTTPException(status_code=404, detail="Post not found")
     return db_post
