@@ -50,9 +50,6 @@ def read_post(post_id: int, db: Session = Depends(get_db)):
 
 @app.get("/api/posts/url/{post_url}", response_model=schemas.Post, tags=["posts"])
 def read_post_by_url(post_url: str, db: Session = Depends(get_db)):
-    logger.info(post_url)
-    # decoded_url = unquote(post_url)
-    # logger.info(decoded_url)
     db_post = crud.get_post_by_url(db, post_url=post_url)
     if db_post is None:
         raise HTTPException(status_code=404, detail="Post not found")
