@@ -1,5 +1,9 @@
+"use client";
+
+import { QueryKey } from "@/app/api";
 import { useCommentsServiceReadCommentsKey } from "@/client/queries";
 import { CommentsService, Comment as CommentType } from "@/client/requests";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { cn } from "@/lib/utils";
 import { HugButton } from "./buttons/hug-button";
@@ -13,11 +17,16 @@ function Comment({
   created_at,
   parent_id,
   post_id,
+  num_hugs,
   ...comment
 }: CommentType) {
+  const queryKey: QueryKey = [useCommentsServiceReadCommentsKey, { id }];
+  const data = { id, num_hugs };
+
+  const queryClient = useQueryClient();
+  queryClient.setQueryData(queryKey, data);
   // this block for matching the author to
   // the post when a user model exists
-  // const queryClient = useQueryClient();
   // const post = queryClient.getQueryData<Post>([
   //   usePostsServiceReadPostKey,
   //   { id: post_id },
@@ -39,7 +48,7 @@ function Comment({
         <HugButton
           id={id}
           mutationFn={CommentsService.hugComment}
-          queryKey={[useCommentsServiceReadCommentsKey, { id }]}
+          queryKey={queryKey}
         />
         <ReplyButton />
       </footer>

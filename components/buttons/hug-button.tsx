@@ -1,7 +1,4 @@
 import { useState } from "react";
-import { usePostsServiceReadPostKey } from "@/client/queries";
-import { Post } from "@/client/requests/models/Post";
-import { PostsService } from "@/client/requests/services/PostsService";
 import {
   MutationFunction,
   useMutation,
@@ -24,22 +21,20 @@ function HugButton({
   queryKey: [string, { id: number }];
 }) {
   const [isClicked, setIsClicked] = useState(false);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useMutation({
+    mutationFn,
+    onSuccess: (data: Huggable) => {
+      queryClient.setQueryData(queryKey, data);
+    },
+  });
 
   const handleClick = () => {
     setIsClicked(true);
     mutate(id);
     setTimeout(() => setIsClicked(false), 1000);
   };
-  const queryClient = useQueryClient();
-
-  const onSuccess = (data: Huggable) => {
-    queryClient.setQueryData(queryKey, data);
-  };
-
-  const { mutate } = useMutation({
-    mutationFn,
-    onSuccess,
-  });
 
   const { num_hugs } = queryClient.getQueryData<Huggable>(queryKey) ?? {
     num_hugs: undefined,

@@ -11,7 +11,7 @@ import { HugButton } from "../buttons/hug-button";
 import SaveButton from "../buttons/save-button";
 import { Comments } from "../comments";
 import TimeAgo from "../time-ago";
-import TextBlock from "./text-block";
+import TextBlock, { BlockType, TextBlockProps } from "./text-block";
 
 export function PostPreview({
   id,
@@ -23,6 +23,13 @@ export function PostPreview({
   question,
   comments,
 }: Post) {
+  // prettier-ignore
+  const textBlocks: TextBlockProps[] = [
+    { id, type: "question" as BlockType, children: question },
+    { id, type: "patient_description" as BlockType, children: patient_description },
+    { id, type: "assessment" as BlockType, children: assessment },
+  ];
+
   return (
     <Accordion
       type="multiple"
@@ -35,15 +42,7 @@ export function PostPreview({
       >
         {title}
       </Link>
-      <TextBlock id={id} type="question">
-        {question}
-      </TextBlock>
-      <TextBlock id={id} type="patient_description">
-        {patient_description}
-      </TextBlock>
-      <TextBlock id={id} type="assessment">
-        {assessment}
-      </TextBlock>
+      {textBlocks.map(TextBlock)}
       <AccordionItem
         value={`post-${id}-comments-accordion`}
         className="border-transparent"
