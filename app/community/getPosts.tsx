@@ -20,9 +20,7 @@ function useInfinitePostsOptions(queryFn: QueryPostsFn = usePosts) {
     queryKey: [usePostsServiceReadPostsKey],
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages, lastPageParam) => {
-      if (lastPage?.length === 0) {
-        return undefined;
-      }
+      if (lastPage?.length === 0) return undefined;
       return lastPageParam + 1;
     },
   });
