@@ -1,19 +1,8 @@
 import { Comment as CommentType } from "@/client/requests";
 
+import { childrenAfterTheirParent } from "@/lib/utils";
 import Comment from "./comment";
 import { AccordionContent } from "./ui/accordion";
-
-const childrenAfterTheirParent = (a: CommentType, b: CommentType) => {
-  if (a.parent_id === null && b.parent_id === null) {
-    return a.id - b.id;
-  } else if (a.parent_id === null) {
-    return -1;
-  } else if (b.parent_id === null) {
-    return 1;
-  } else {
-    return a.id - b.id;
-  }
-};
 
 export function Comments({ comments }: { comments?: CommentType[] }) {
   if (!comments || comments.length === 0) return null;

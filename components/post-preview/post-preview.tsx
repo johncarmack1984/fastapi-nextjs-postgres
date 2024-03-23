@@ -3,6 +3,8 @@ import { usePostsServiceReadPostKey } from "@/client/queries";
 import { Post } from "@/client/requests/models/Post";
 import { PostsService } from "@/client/requests/services/PostsService";
 
+import ButtonRow from "@/components/button-row";
+import EngagementRow from "@/components/engagement-row";
 import { Accordion, AccordionItem } from "@/components/ui/accordion";
 import CommentsButton from "../buttons/comments-button";
 import { HugButton } from "../buttons/hug-button";
@@ -10,20 +12,6 @@ import SaveButton from "../buttons/save-button";
 import { Comments } from "../comments";
 import TimeAgo from "../time-ago";
 import TextBlock from "./text-block";
-
-function EngagementRow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="mt-4 flex items-center justify-between">{children}</div>
-  );
-}
-
-function ButtonRow({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="flex items-center space-x-2 text-xs text-gray-500 sm:text-sm">
-      {children}
-    </div>
-  );
-}
 
 export function PostPreview({
   id,
