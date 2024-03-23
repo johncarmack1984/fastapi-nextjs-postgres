@@ -18,14 +18,14 @@ function TextBlock({
   return (
     <AccordionItem className="border-transparent" value={`post-${id}-${type}`}>
       <AccordionTrigger className=" text-left">
-        <p className="mt-2 line-clamp-4 text-sm text-gray-600">
+        <article className="mt-2 line-clamp-4 text-sm text-gray-600">
           <Badge variant="secondary" className="capitalize">
             {displayType}:{" "}
           </Badge>
           {/* <AccordionContent className="!data-[state=closed]:animate-preview-accordion-up !data-[state=open]:animate-preview-accordion-down data-[state=closed]:line-clamp-4"> */}
           {children}
           {/* </AccordionContent>/ */}
-        </p>
+        </article>
       </AccordionTrigger>
     </AccordionItem>
   );

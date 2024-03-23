@@ -24,28 +24,26 @@ function Comment({
   // ]);
   /* <pre>{JSON.stringify(post, null, 2)}</pre> */
   return (
-    <div className={cn(parent_id && "border-l-4 border-blue-600 pl-4")}>
-      <div className="flex items-center justify-between">
-        <h3
-          className={cn(
-            "font-semibold",
-            parent_id && "font-semibold text-blue-600",
-          )}
-        >
+    <article
+      key={`comment-${id}`}
+      className={cn(parent_id && "border-l-4 border-blue-600 pl-4")}
+    >
+      <header className="flex items-center justify-between">
+        <h3 className={cn("font-semibold", parent_id && "text-blue-600")}>
           {display_name}
         </h3>
         <TimeAgo date={created_at} />
-      </div>
+      </header>
       <p className="mt-1">{text}</p>
-      <div className="mt-2 flex items-center">
+      <footer className="mt-2 flex items-center">
         <HugButton
           id={id}
           mutationFn={CommentsService.hugComment}
           queryKey={[useCommentsServiceReadCommentsKey, { id }]}
         />
         <ReplyButton />
-      </div>
-    </div>
+      </footer>
+    </article>
   );
 }
 
