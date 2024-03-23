@@ -1,17 +1,28 @@
 "use client";
 
-import React from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import React, { useState } from "react";
+import { QueryClient } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { ReactQueryStreamedHydration } from "@tanstack/react-query-next-experimental";
+import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import TimeAgo from "javascript-time-ago";
 import en from "javascript-time-ago/locale/en";
+
+import { createIDBPersister } from "./idbPersister";
 
 TimeAgo.addDefaultLocale(en);
 
 function makeQueryClient() {
-  return new QueryClient();
+  return new QueryClient({
+    defaultOptions: {
+      queries: {
+        gcTime: 1000 * 60 * 60 * 24, // 24 hours
+      },
+    },
+  });
 }
+
+const persister = createIDBPersister();
 
 let clientQueryClient: QueryClient | undefined = undefined;
 
@@ -27,16 +38,19 @@ function getQueryClient() {
 }
 
 export default function Providers(props: { children: React.ReactNode }) {
-  const queryClient = getQueryClient();
+  const [queryClient] = useState(() => getQueryClient());
 
   return (
     <>
-      <QueryClientProvider client={queryClient}>
+      <PersistQueryClientProvider
+        client={queryClient}
+        persistOptions={{ persister }}
+      >
         <ReactQueryStreamedHydration>
           {props.children}
         </ReactQueryStreamedHydration>
         <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
+      </PersistQueryClientProvider>
     </>
   );
 }
