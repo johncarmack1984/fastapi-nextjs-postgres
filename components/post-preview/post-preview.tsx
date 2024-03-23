@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { usePostsServiceReadPostKey } from "@/client/queries";
-import { Post } from "@/client/requests/models/Post";
-import { PostsService } from "@/client/requests/services/PostsService";
 
+import { usePostsServiceReadPostKey } from "@/lib/api/client/queries";
+import { Post } from "@/lib/api/client/requests/models/Post";
+import { PostsService } from "@/lib/api/client/requests/services/PostsService";
 import ButtonRow from "@/components/button-row";
 import EngagementRow from "@/components/engagement-row";
 import { Accordion, AccordionItem } from "@/components/ui/accordion";

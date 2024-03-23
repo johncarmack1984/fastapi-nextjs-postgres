@@ -1,7 +1,8 @@
-import { usePostsServiceReadPostsKey } from "@/client/queries";
-import { Post } from "@/client/requests/models/Post";
-import { PostsService } from "@/client/requests/services/PostsService";
 import { infiniteQueryOptions } from "@tanstack/react-query";
+
+import { usePostsServiceReadPostsKey } from "@/lib/api/client/queries";
+import { Post } from "@/lib/api/client/requests/models/Post";
+import { PostsService } from "@/lib/api/client/requests/services/PostsService";
 
 const usePosts = async ({ pageParam = 0 }: { pageParam?: number }) => {
   const posts = await PostsService.readPosts(pageParam * 10, 10);

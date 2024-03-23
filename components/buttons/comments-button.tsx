@@ -1,5 +1,4 @@
-import { Comment as CommentType } from "@/client/requests";
-
+import { Comment as CommentType } from "@/lib/api/client/requests";
 import { ReplyIcon } from "@/components/icons/reply-icon";
 import { AccordionTrigger } from "@/components/ui/accordion";
 

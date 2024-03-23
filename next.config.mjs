@@ -1,11 +1,26 @@
+// @ts-check
+
 /** @type {import('next').NextConfig} */
+import { dirname, resolve } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
 const nextConfig = {
   experimental: {
+    instrumentationHook: true,
     ppr: true,
   },
+  reactStrictMode: true,
+  /** @param config {any} */
   webpack: (config) => {
     if (config.name === "server")
       config.optimization.concatenateModules = false;
+
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      "@": resolve(__dirname, "./"),
+    };
 
     return config;
   },
@@ -13,6 +28,11 @@ const nextConfig = {
     return [
       {
         source: "/",
+        destination: "/community",
+        permanent: true,
+      },
+      {
+        source: "/community/post",
         destination: "/community",
         permanent: true,
       },
@@ -45,4 +65,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+export default nextConfig;

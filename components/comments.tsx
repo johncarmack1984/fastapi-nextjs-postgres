@@ -1,6 +1,5 @@
-import { Comment as CommentType } from "@/client/requests";
-
-import { childrenAfterTheirParent } from "@/lib/utils";
+import { Comment as CommentType } from "@/lib/api/client/requests";
+import { childrenAfterTheirParent } from "@/lib/arrays";
 import Comment from "./comment";
 import { AccordionContent } from "./ui/accordion";
 

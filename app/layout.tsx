@@ -1,9 +1,9 @@
-import "@/styles/globals.css";
+import "./globals.css";
 
 import { Karla as FontSans } from "next/font/google";
 import { cva } from "class-variance-authority";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/strings";
 import { Sidebar } from "@/components/sidebar";
 import { TopBar } from "@/components/top-bar";
 import Providers from "./providers";
@@ -28,7 +28,6 @@ export default function RootLayout({
     <html lang="en">
       <body className={cn(bodyVariants(), fontSans.variable)}>
         <Providers>
-          <TopBar />
           <main className="mx-auto flex flex-col-reverse items-center gap-4 p-6 lg:flex-row lg:items-start">
             {children}
             <Sidebar />

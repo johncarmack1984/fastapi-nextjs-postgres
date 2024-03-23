@@ -1,11 +1,14 @@
 "use client";
 
 import { QueryKey } from "@/app/api";
-import { useCommentsServiceReadCommentsKey } from "@/client/queries";
-import { CommentsService, Comment as CommentType } from "@/client/requests";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { cn } from "@/lib/utils";
+import { useCommentsServiceReadCommentsKey } from "@/lib/api/client/queries";
+import {
+  CommentsService,
+  Comment as CommentType,
+} from "@/lib/api/client/requests";
+import { cn } from "@/lib/strings";
 import { HugButton } from "./buttons/hug-button";
 import ReplyButton from "./buttons/reply-button";
 import TimeAgo from "./time-ago";

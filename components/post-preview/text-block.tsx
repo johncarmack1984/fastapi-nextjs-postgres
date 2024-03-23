@@ -1,9 +1,11 @@
+"use client";
+
 import { usePathname } from "next/navigation";
-import { AccordionTrigger } from "@radix-ui/react-accordion";
 import { cva } from "class-variance-authority";
 
-import { cn, titleCase } from "@/lib/utils";
-import { Accordion, AccordionItem } from "@/components/ui/accordion";
+// import { MDXClient } from "next-mdx-remote-client/csr";
+
+import { cn, titleCase } from "@/lib/strings";
 import { Badge } from "../ui/badge";
 
 export type BlockType = "question" | "patient_description" | "assessment";
@@ -42,28 +44,21 @@ function TextBlock({ id, type, children }: TextBlockProps) {
       .findLast((x) => x) === "community";
   if (!children) return null;
   const displayType = titleCase(type);
+  const markdown = children.toString();
   return (
-    <Accordion key={`${id}-${type}`} type="single" collapsible={isPreview}>
-      <AccordionItem
-        key={`post-${id}-${type}`}
-        className="border-transparent"
-        value={`post-${id}-${type}`}
+    <article
+      key={`${id}-${type}`}
+      className={cn(textBlockVariants({ isPreview }))}
+    >
+      <Badge
+        variant="secondary"
+        className={cn(textBlockBadgeVariants({ isPreview }))}
       >
-        <AccordionTrigger className="text-left">
-          <article className={cn(textBlockVariants({ isPreview }))}>
-            <Badge
-              variant="secondary"
-              className={cn(textBlockBadgeVariants({ isPreview }))}
-            >
-              {displayType}:{" "}
-            </Badge>
-            {/* <AccordionContent className="!data-[state=closed]:animate-preview-accordion-up !data-[state=open]:animate-preview-accordion-down data-[state=closed]:line-clamp-4"> */}
-            {children}
-            {/* </AccordionContent>/ */}
-          </article>
-        </AccordionTrigger>
-      </AccordionItem>
-    </Accordion>
+        {displayType}:{" "}
+      </Badge>
+      {/* <MDXRemote source={markdown} /> */}
+      {children}
+    </article>
   );
 }
 

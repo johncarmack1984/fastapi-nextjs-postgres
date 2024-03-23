@@ -5,7 +5,7 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/strings";
 import { HeartIcon } from "@/components/icons/heart-icon";
 import { Button } from "@/components/ui/button";
 

@@ -1,7 +1,5 @@
-import { notFound } from "next/navigation";
 import db from "@/app/connectToDb";
-import { postSchema, selectPostSchema } from "@/app/validate";
-import { Post as PostType } from "@/client/requests";
+import { selectPostSchema } from "@/app/validate";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 
 import Post from "./post";
@@ -22,7 +20,7 @@ export default async function PostPage({
 }: {
   params: { post_url: string };
 }) {
-  const post: PostType = await db
+  const post = await db
     .selectFrom("auxhealth_posts")
     .selectAll()
     .select((eb) => [
@@ -35,6 +33,7 @@ export default async function PostPage({
       ).as("comments"),
     ])
     .where("post_url", "=", decodeURIComponent(post_url))
+    .limit(1)
     .executeTakeFirst()
     .then(selectPostSchema.parse);
   return <Post {...post} />;

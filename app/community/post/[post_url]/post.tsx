@@ -1,11 +1,11 @@
 "use client";
 
 import type { QueryKey } from "@/app/api";
-import { usePostsServiceReadPostKey } from "@/client/queries";
-import { PostsService, type Post as PostType } from "@/client/requests";
 import { useQueryClient } from "@tanstack/react-query";
 
-import { childrenAfterTheirParent } from "@/lib/utils";
+import { usePostsServiceReadPostKey } from "@/lib/api/client/queries";
+import { PostsService, type Post as PostType } from "@/lib/api/client/requests";
+import { childrenAfterTheirParent } from "@/lib/arrays";
 import { HugButton } from "@/components/buttons/hug-button";
 import Comment from "@/components/comment";
 import EngagementRow from "@/components/engagement-row";

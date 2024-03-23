@@ -2,9 +2,19 @@
 
 import * as React from "react";
 import * as AccordionPrimitive from "@radix-ui/react-accordion";
-import { ChevronDown } from "lucide-react";
 
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/strings";
+
+const consoleWarn = console.warn;
+const SUPPRESSED_WARNINGS = [
+  "Accessing element.ref is no longer supported. ref is now a regular prop.",
+];
+
+console.warn = function filterWarnings(msg, ...args) {
+  if (!SUPPRESSED_WARNINGS.some((entry) => msg.includes(entry))) {
+    consoleWarn(msg, ...args);
+  }
+};
 
 const Accordion = AccordionPrimitive.Root;
 
