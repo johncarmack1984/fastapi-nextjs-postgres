@@ -1,4 +1,7 @@
+import { notFound } from "next/navigation";
 import db from "@/app/connectToDb";
+import { postSchema, selectPostSchema } from "@/app/validate";
+import { Post as PostType } from "@/client/requests";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 
 import Post from "./post";
@@ -19,7 +22,7 @@ export default async function PostPage({
 }: {
   params: { post_url: string };
 }) {
-  const post = await db
+  const post: PostType = await db
     .selectFrom("auxhealth_posts")
     .selectAll()
     .select((eb) => [
@@ -32,14 +35,7 @@ export default async function PostPage({
       ).as("comments"),
     ])
     .where("post_url", "=", decodeURIComponent(post_url))
-    .executeTakeFirstOrThrow()
-    .then(({ created_at, ...post }) => ({
-      ...post,
-      created_at: String(created_at),
-      comments: post.comments?.map(({ created_at, ...comment }) => ({
-        ...comment,
-        created_at: String(created_at),
-      })),
-    }));
+    .executeTakeFirst()
+    .then(selectPostSchema.parse);
   return <Post {...post} />;
 }
