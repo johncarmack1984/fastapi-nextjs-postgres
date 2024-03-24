@@ -9,9 +9,15 @@ import {
   Comment as CommentType,
 } from "@/lib/api/client/requests";
 import { cn } from "@/lib/strings";
+import ButtonRow from "./button-row";
 import { HugButton } from "./buttons/hug-button";
 import ReplyButton from "./buttons/reply-button";
+import EngagementRow from "./engagement-row";
 import TimeAgo from "./time-ago";
+import { CardHeader } from "./ui/card";
+import Large from "./ui/typography/large";
+import P from "./ui/typography/p";
+import Strong from "./ui/typography/strong";
 
 function Comment({
   id,
@@ -38,23 +44,29 @@ function Comment({
   return (
     <article
       key={`comment-${id}`}
-      className={cn(parent_id && "border-l-4 border-blue-600 pl-4")}
+      className={cn(
+        "m-0 p-0 [&:not(:first-child)]:mt-5",
+        parent_id && "border-l-4 border-blue-600 pl-4",
+      )}
     >
-      <header className="flex items-center justify-between">
-        <h3 className={cn("font-semibold", parent_id && "text-blue-600")}>
+      <CardHeader className="m-0 flex flex-row items-center justify-start gap-5 p-0">
+        <Large className={cn("m-0 p-0", parent_id && "text-blue-600")}>
           {display_name}
-        </h3>
-        <TimeAgo date={created_at} />
-      </header>
-      <p className="mt-1">{text}</p>
-      <footer className="mt-2 flex items-center">
-        <HugButton
-          id={id}
-          mutationFn={CommentsService.hugComment}
-          queryKey={queryKey}
-        />
-        <ReplyButton />
-      </footer>
+        </Large>
+        <TimeAgo className="m-0 !my-2 p-0" date={created_at} />
+      </CardHeader>
+      <P className=" m-0 !mt-0.5 p-0 leading-5">{text}</P>
+      <EngagementRow className="m-0 p-0">
+        <ButtonRow className="m-0 p-0">
+          <HugButton
+            id={id}
+            mutationFn={CommentsService.hugComment}
+            queryKey={queryKey}
+            className="m-0 p-0"
+          />
+          <ReplyButton />
+        </ButtonRow>
+      </EngagementRow>
     </article>
   );
 }

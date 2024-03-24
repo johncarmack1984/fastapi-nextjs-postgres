@@ -1,9 +1,12 @@
 import ReactTimeAgo from "react-time-ago";
 
-function TimeAgo({ date }: { date: string }) {
+import { cn } from "@/lib/strings";
+import { mutedVariants } from "./ui/typography/muted";
+
+function TimeAgo({ date, className }: { date: string; className?: string }) {
   return (
     <ReactTimeAgo
-      className="text-sm font-semibold text-gray-400"
+      className={cn(mutedVariants(), className)}
       date={new Date(date)}
     />
   );

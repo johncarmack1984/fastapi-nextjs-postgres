@@ -1,4 +1,8 @@
+import { cva } from "class-variance-authority";
+
 import { cn } from "@/lib/strings";
+
+export const mutedVariants = cva("text-sm text-muted-foreground");
 
 export default function Muted({
   className,
@@ -6,7 +10,7 @@ export default function Muted({
   ...props
 }: React.ComponentPropsWithoutRef<"p">) {
   return (
-    <p className={cn("text-sm text-muted-foreground", className)} {...props}>
+    <p className={cn(mutedVariants(), className)} {...props}>
       {children}
     </p>
   );

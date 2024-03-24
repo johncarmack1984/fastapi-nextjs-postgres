@@ -15,10 +15,12 @@ function HugButton({
   id,
   mutationFn,
   queryKey,
+  className,
 }: {
   id: number;
   mutationFn: MutationFunction<Huggable, number>;
   queryKey: [string, { id: number }];
+  className?: string;
 }) {
   const [isClicked, setIsClicked] = useState(false);
   const queryClient = useQueryClient();
@@ -46,6 +48,7 @@ function HugButton({
       className={cn(
         "flex items-center space-x-2 transition-all",
         isClicked && "animate-sunburst",
+        className,
       )}
     >
       <HeartIcon
