@@ -1,6 +1,6 @@
-// import { evaluate, MDXRemote } from "next-mdx-remote-client/rsc";
-// import { serialize } from "next-mdx-remote-client/serialize";
 import { z } from "zod";
+
+import { mdxSchema, sourceToMdx } from "@/lib/mdx";
 
 const dateStringSchema = z.date().transform((date) => date.toISOString());
 
@@ -26,8 +26,26 @@ export const postSchema = z.object({
   comments: z.array(commentSchema).optional(),
 });
 
+const patient_description = mdxSchema({ title: "Patient Description" });
+const question = mdxSchema({ title: "Question" });
+const assessment = mdxSchema({ title: "Assessment" });
+
 export const selectPostSchema = z.object({
   ...postSchema.shape,
   created_at: dateStringSchema,
-  // assessment: z.string().transform((str) => serialize(str)),
+  patient_description,
+  question,
+  assessment,
 });
+
+export const selectPostsSchema = z.array(
+  z.object({
+    ...postSchema.shape,
+    patient_description,
+    question,
+    assessment,
+  }),
+);
+
+export type SelectPostSchema = z.infer<typeof selectPostSchema>;
+export type SelectPostsSchema = z.infer<typeof selectPostsSchema>;

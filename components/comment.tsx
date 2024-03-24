@@ -1,8 +1,8 @@
 "use client";
 
-import { QueryKey } from "@/app/api";
 import { useQueryClient } from "@tanstack/react-query";
 
+import { QueryKey } from "@/lib/api/api";
 import { useCommentsServiceReadCommentsKey } from "@/lib/api/client/queries";
 import {
   CommentsService,

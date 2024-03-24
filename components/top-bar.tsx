@@ -2,8 +2,8 @@ import Image from "next/image";
 
 export function TopBar() {
   return (
-    <nav className="sticky top-0 z-30 bg-[rgba(251,_251,_253,_0.8)] py-4 shadow-topbar [backdrop-filter:saturate(180%)_blur(20px)]">
-      <div className="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+    <nav className=" z-30 bg-[rgba(251,_251,_253,_0.8)] py-4 shadow-topbar [backdrop-filter:saturate(180%)_blur(20px)]">
+      <div className=" sticky top-0 mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <div className="flex items-center">
           <a className="text-3xl font-bold text-gray-800" href="#">
             <Image

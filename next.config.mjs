@@ -10,6 +10,7 @@ const nextConfig = {
   experimental: {
     instrumentationHook: true,
     ppr: true,
+    mdxRs: true,
   },
   reactStrictMode: true,
   /** @param config {any} */

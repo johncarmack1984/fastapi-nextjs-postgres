@@ -1,7 +1,7 @@
-import db from "@/app/connectToDb";
 import { selectPostSchema } from "@/app/validate";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 
+import db from "@/lib/db";
 import Post from "./post";
 
 export async function generateStaticParams() {
@@ -35,6 +35,6 @@ export default async function PostPage({
     .where("post_url", "=", decodeURIComponent(post_url))
     .limit(1)
     .executeTakeFirst()
-    .then(selectPostSchema.parse);
+    .then(selectPostSchema.parseAsync);
   return <Post {...post} />;
 }

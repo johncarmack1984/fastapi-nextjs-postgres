@@ -1,45 +1,52 @@
 "use client";
 
+import { PostPreview } from "@/app/community/post-preview";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 
 import {
   useCommentsServiceReadCommentsKey,
   usePostsServiceReadPostKey,
+  usePostsServiceReadPostsKey,
 } from "@/lib/api/client/queries";
-import { Post, PostsService } from "@/lib/api/client/requests";
 import InfiniteScrollLoader from "@/components/infinite-scroll-loader";
-import { PostPreview } from "@/components/post-preview/post-preview";
-import { useInfinitePostsOptions } from "./get-posts";
+import { SelectPostsSchema } from "../validate";
+import { getPosts } from "./actions";
 
 export default function CommunityPageClient() {
   const queryClient = useQueryClient();
 
-  const queryFn = async ({ pageParam = 0 }: { pageParam?: number }) => {
-    const posts = await PostsService.readPosts(pageParam * 10, 10);
+  const infinitePosts = useInfiniteQuery({
+    queryFn: async ({ pageParam = 0 }: { pageParam?: number }) => {
+      const posts = await getPosts({ pageParam });
 
-    posts.forEach((post) => {
-      console.log("adding post to cache", post.id);
+      posts.forEach((post) => {
+        console.log("adding post to cache", post.id);
 
-      queryClient.setQueryData(
-        [usePostsServiceReadPostKey, { id: post.id }],
-        post,
-      );
-
-      post.comments?.forEach((comment) => {
-        console.log("adding comment to cache", comment.id);
         queryClient.setQueryData(
-          [useCommentsServiceReadCommentsKey, { id: comment.id }],
-          comment,
+          [usePostsServiceReadPostKey, { id: post.id }],
+          post,
         );
+
+        post.comments?.forEach((comment) => {
+          console.log("adding comment to cache", comment.id);
+          queryClient.setQueryData(
+            [useCommentsServiceReadCommentsKey, { id: comment.id }],
+            comment,
+          );
+        });
       });
-    });
 
-    return posts;
-  };
+      return posts;
+    },
+    queryKey: [usePostsServiceReadPostsKey],
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages, lastPageParam) => {
+      if (lastPage?.length === 0) return undefined;
+      return lastPageParam + 1;
+    },
+  });
 
-  const infinitePosts = useInfiniteQuery(useInfinitePostsOptions(queryFn));
-
-  const renderPage = (page: Post[]) => page.map(PostPreview);
+  const renderPage = (page: SelectPostsSchema) => page.map(PostPreview);
 
   return (
     <div className="flex w-full flex-auto flex-col gap-4 lg:w-[500px]">

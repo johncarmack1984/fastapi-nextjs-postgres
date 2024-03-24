@@ -1,6 +1,11 @@
+import { nodeTypes } from "@mdx-js/mdx";
 import { Element, Properties } from "hast";
-import { Code, Html } from "mdast";
-import { Raw, State } from "mdast-util-to-hast";
+import { Code } from "mdast";
+import { State } from "mdast-util-to-hast";
+import rehypeHighlight from "rehype-highlight";
+import rehypeRaw from "rehype-raw";
+import rehypeSlug from "rehype-slug";
+import { type PluggableList } from "unified";
 
 /**
  * Turn an mdast `code` node into hast.
@@ -45,29 +50,8 @@ export function code(state: State, node: Code): Element {
   return result;
 }
 
-/**
- * Turn an mdast `html` node into hast (`raw` node in dangerous mode, otherwise nothing).
- *
- * this handler will skip the react components, and
- * designed for only markdown "md" format documents in the @mdx-js/mdx
- *
- * @param {State} state
- *   Info passed around.
- * @param {Html} node
- *   mdast node.
- * @returns {Element | Raw | undefined}
- *   hast node.
- */
-export function html(state: State, node: Html): Element | Raw | undefined {
-  if (state.options.allowDangerousHtml) {
-    // check if it is a react component name pattern, then return undefined
-    const component_name = node.value.match(/<([A-Z][^\/\s>]+)/)?.[1];
-    if (component_name) return;
-
-    const result: Raw = { type: "raw", value: node.value };
-    state.patch(node, result);
-    return state.applyData(node, result);
-  }
-
-  return undefined;
-}
+export const rehypePlugins: PluggableList = [
+  [rehypeRaw, { passThrough: nodeTypes }], // to allow HTML elements in "md" format, "passThrough" is for "mdx" works as well
+  rehypeHighlight,
+  rehypeSlug,
+];

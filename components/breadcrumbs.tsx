@@ -52,7 +52,7 @@ function Breadcrumbs({ segments }: { segments: string[] }) {
   };
 
   return (
-    <Breadcrumb className="mb-0 p-4 pb-0">
+    <Breadcrumb className="sticky top-[0px] z-30 bg-[#F0F0F4]/[0.85] p-4 py-5 [backdrop-filter:saturate(180%)_blur(20px)]">
       <BreadcrumbList>
         {[home, ...segments.map(toBreadCrumbs)].map(BreadcrumbsItem)}
       </BreadcrumbList>

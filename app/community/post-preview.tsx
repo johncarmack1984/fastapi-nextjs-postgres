@@ -1,17 +1,19 @@
 import Link from "next/link";
 
 import { usePostsServiceReadPostKey } from "@/lib/api/client/queries";
-import { Post } from "@/lib/api/client/requests/models/Post";
 import { PostsService } from "@/lib/api/client/requests/services/PostsService";
 import ButtonRow from "@/components/button-row";
+import CommentsButton from "@/components/buttons/comments-button";
+import { HugButton } from "@/components/buttons/hug-button";
+import SaveButton from "@/components/buttons/save-button";
+import { Comments } from "@/components/comments";
 import EngagementRow from "@/components/engagement-row";
+import MDXClient from "@/components/mdx/mdx-client";
+import TimeAgo from "@/components/time-ago";
 import { Accordion, AccordionItem } from "@/components/ui/accordion";
-import CommentsButton from "../buttons/comments-button";
-import { HugButton } from "../buttons/hug-button";
-import SaveButton from "../buttons/save-button";
-import { Comments } from "../comments";
-import TimeAgo from "../time-ago";
-import TextBlock, { BlockType, TextBlockProps } from "./text-block";
+import H3 from "@/components/ui/typography/h3";
+import H4 from "@/components/ui/typography/h4";
+import { SelectPostSchema } from "../validate";
 
 export function PostPreview({
   id,
@@ -22,27 +24,26 @@ export function PostPreview({
   assessment,
   question,
   comments,
-}: Post) {
-  // prettier-ignore
-  const textBlocks: TextBlockProps[] = [
-    { id, type: "question" as BlockType, children: question },
-    { id, type: "patient_description" as BlockType, children: patient_description },
-    { id, type: "assessment" as BlockType, children: assessment },
+}: SelectPostSchema) {
+  const mdxBlocks = [
+    { ...patient_description },
+    { ...question },
+    { ...assessment },
   ];
 
   return (
     <Accordion
-      type="multiple"
-      key={`post-${id}-preview`}
+      type="single"
+      key={`post-${id}-preview-comments`}
+      collapsible
       className="rounded-lg bg-white p-6 shadow"
     >
-      <Link
-        href={`/community/post/${post_url}`}
-        className=" text-[22px] font-semibold tracking-wide transition-[decoration] hover:underline"
-      >
-        {title}
+      <Link href={`/community/post/${post_url}`}>
+        <H4 className="transtion-colors w-fit border-b-2 border-transparent decoration-2 underline-offset-8 duration-150 ease-in-out hover:border-b-current">
+          {title}
+        </H4>
       </Link>
-      {textBlocks.map(TextBlock)}
+      {mdxBlocks.map(MDXClient)}
       <AccordionItem
         value={`post-${id}-comments-accordion`}
         className="border-transparent"

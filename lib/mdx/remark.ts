@@ -1,9 +1,3 @@
-import { nodeTypes } from "@mdx-js/mdx";
-import recmaMdxChangeProps from "recma-mdx-change-props";
-import recmaMdxEscapeMissingComponents from "recma-mdx-escape-missing-components";
-import rehypeHighlight from "rehype-highlight";
-import rehypeRaw from "rehype-raw";
-import rehypeSlug from "rehype-slug";
 import remarkEmoji from "remark-emoji";
 import remarkFlexibleCodeTitles from "remark-flexible-code-titles";
 import remarkFlexibleContainers, {
@@ -18,8 +12,7 @@ import remarkFlexibleToc, {
 import remarkGfm from "remark-gfm";
 import { type PluggableList } from "unified";
 
-import { toTitleCase } from ".";
-import { code, html } from "./rehype-handlers";
+import { titleCase } from "@/lib/strings";
 
 const baseRemarkPlugins: PluggableList = [
   remarkGfm,
@@ -34,7 +27,7 @@ const baseRemarkPlugins: PluggableList = [
       containerProperties: (type, title) => {
         return {
           ["data-type"]: type?.toLowerCase(),
-          ["data-title"]: toTitleCase(title) ?? toTitleCase(type),
+          ["data-title"]: titleCase(title) ?? titleCase(type),
         };
       },
     } as FlexibleContainerOptions,
@@ -58,22 +51,4 @@ export function getRemarkPlugins(toc: TocItem[]): PluggableList {
       } as FlexibleTocOptions,
     ],
   ];
-}
-
-export const rehypePlugins: PluggableList = [
-  [rehypeRaw, { passThrough: nodeTypes }], // to allow HTML elements in "md" format, "passThrough" is for "mdx" works as well
-  rehypeHighlight,
-  rehypeSlug,
-];
-
-export const recmaPlugins: PluggableList = [
-  [
-    recmaMdxEscapeMissingComponents,
-    ["Bar", "Toc", "ComponentFromOuterProvider"],
-  ],
-  recmaMdxChangeProps,
-];
-
-export function getRemarkRehypeOptions(format: "md" | "mdx") {
-  return { handlers: { ...(format === "md" && { html }), code } };
 }

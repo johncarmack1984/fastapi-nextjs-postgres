@@ -6,4 +6,4 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const titleCase = (str: string) => startCase(camelCase(str));
+export const titleCase = (str?: string) => startCase(camelCase(str));
