@@ -9,21 +9,20 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const nextConfig = {
   experimental: {
     ppr: true,
-    mdxRs: true,
+    // mdxRs: true,
   },
   reactStrictMode: true,
-  /** @param config {any} */
-  webpack: (config) => {
-    if (config.name === "server")
-      config.optimization.concatenateModules = false;
+  // /** @param config {any} */
+  // webpack: (config) => {
+  //   // if (config.name === "server") config.optimization.concatenateModules = true;
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": resolve(__dirname, "./"),
-    };
+  //   config.resolve.alias = {
+  //     ...config.resolve.alias,
+  //     "@": resolve(__dirname, "./"),
+  //   };
 
-    return config;
-  },
+  //   return config;
+  // },
   redirects: async () => {
     return [
       {
