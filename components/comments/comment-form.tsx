@@ -40,42 +40,54 @@ export default function CommentForm({
 }) {
   const queryClient = useQueryClient();
 
-  const mutation = useMutation({
-    mutationFn: async (
-      data: Awaited<ReturnType<typeof insertCommentSchema.parseAsync>>,
-    ) => await CommentsService.createComment(post_id, data),
-    onError: (error, variables, context) => {
-      toast({
-        title: "An error occurred when adding your comment:",
-        description: (
-          <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            <Code className="text-white">{JSON.stringify(error, null, 2)}</Code>
-            <Code className="text-white">
-              {JSON.stringify(variables, null, 2)}
-            </Code>
-            <Code className="text-white">
-              {JSON.stringify(context, null, 2)}
-            </Code>
-          </pre>
-        ),
-        variant: "destructive",
-      });
-    },
-    onSettled: async (data, error, variables, context) => {
-      const post = await PostsService.readPost(post_id);
-      queryClient.setQueryData(
-        [usePostsServiceReadPostsKey, { id: post_id }],
-        post,
-      );
-    },
-    onSuccess: (data, variables, context) => {
-      queryClient.invalidateQueries({
-        queryKey: [usePostsServiceReadPostsKey, { id: post_id }],
-      });
-      queryClient.setQueryData(
-        [useCommentsServiceReadCommentsKey, { id: data.id }],
-        data,
-      );
+  // const mutation = useMutation({
+  //   mutationFn: async (
+  //     data: Awaited<ReturnType<typeof insertCommentSchema.parseAsync>>,
+  //   ) => await CommentsService.createComment(post_id, data),
+  //   onError: (error, variables, context) => {
+  //     toast({
+  //       title: "An error occurred when adding your comment:",
+  //       description: (
+  //         <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+  //           <Code className="text-white">{JSON.stringify(error, null, 2)}</Code>
+  //           <Code className="text-white">
+  //             {JSON.stringify(variables, null, 2)}
+  //           </Code>
+  //           <Code className="text-white">
+  //             {JSON.stringify(context, null, 2)}
+  //           </Code>
+  //         </pre>
+  //       ),
+  //       variant: "destructive",
+  //     });
+  //   },
+  //   onSettled: async (data, error, variables, context) => {
+  //     const post = await PostsService.readPost(post_id);
+  //     queryClient.setQueryData(
+  //       [usePostsServiceReadPostsKey, { id: post_id }],
+  //       post,
+  //     );
+  //   },
+  //   onSuccess: (data, variables, context) => {
+  //     queryClient.invalidateQueries({
+  //       queryKey: [usePostsServiceReadPostsKey, { id: post_id }],
+  //     });
+  //     queryClient.setQueryData(
+  //       [useCommentsServiceReadCommentsKey, { id: data.id }],
+  //       data,
+  //     );
+  //   },
+  // });
+
+  const form = useForm<z.infer<typeof insertCommentSchema>>({
+    resolver: zodResolver(insertCommentSchema),
+    defaultValues: {
+      display_name: "",
+      text: "",
+      post_id,
+      parent_id,
+      created_at: new Date().toISOString(),
+      num_hugs: 0,
     },
   });
 
@@ -89,18 +101,6 @@ export default function CommentForm({
       ),
     });
   }
-
-  const form = useForm<z.infer<typeof insertCommentSchema>>({
-    resolver: zodResolver(insertCommentSchema),
-    defaultValues: {
-      display_name: "",
-      text: "",
-      post_id,
-      parent_id,
-      created_at: new Date().toISOString(),
-      num_hugs: 0,
-    },
-  });
 
   return (
     <Form {...form}>
