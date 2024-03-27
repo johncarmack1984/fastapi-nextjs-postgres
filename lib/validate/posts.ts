@@ -1,18 +1,7 @@
 import { z } from "zod";
 
-import { mdxSchema, sourceToMdx } from "@/lib/mdx";
-
-const dateStringSchema = z.date().transform((date) => date.toISOString());
-
-export const commentSchema = z.object({
-  display_name: z.string(),
-  text: z.string(),
-  created_at: z.string(),
-  num_hugs: z.number(),
-  id: z.number(),
-  parent_id: z.number().optional().nullable(),
-  post_id: z.number(),
-});
+import { commentSchema } from "./comments";
+import { mdxSchema } from "./mdx";
 
 export const postSchema = z.object({
   post_url: z.string(),
@@ -32,7 +21,7 @@ const assessment = mdxSchema({ title: "Assessment" });
 
 export const selectPostSchema = z.object({
   ...postSchema.shape,
-  created_at: dateStringSchema,
+  created_at: z.date().transform((date) => date.toISOString()),
   patient_description,
   question,
   assessment,
@@ -40,10 +29,8 @@ export const selectPostSchema = z.object({
 
 export const selectPostsSchema = z.array(
   z.object({
-    ...postSchema.shape,
-    patient_description,
-    question,
-    assessment,
+    ...selectPostSchema.shape,
+    created_at: z.string(),
   }),
 );
 

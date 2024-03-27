@@ -13,6 +13,17 @@ import { createIDBPersister } from "@/lib/browser/idb-persister";
 import Breadcrumbs from "@/components/breadcrumbs";
 import { TopBar } from "@/components/top-bar";
 
+const consoleWarn = console.warn;
+const SUPPRESSED_WARNINGS = [
+  "Accessing element.ref is no longer supported. ref is now a regular prop.",
+];
+
+console.warn = function filterWarnings(msg, ...args) {
+  if (!SUPPRESSED_WARNINGS.some((entry) => msg.includes(entry))) {
+    consoleWarn(msg, ...args);
+  }
+};
+
 TimeAgo.addDefaultLocale(en);
 
 function makeQueryClient() {

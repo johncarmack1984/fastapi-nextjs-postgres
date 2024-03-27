@@ -8,8 +8,8 @@ import {
   usePostsServiceReadPostKey,
   usePostsServiceReadPostsKey,
 } from "@/lib/api/client/queries";
+import { SelectPostsSchema } from "@/lib/validate/posts";
 import InfiniteScrollLoader from "@/components/infinite-scroll-loader";
-import { SelectPostsSchema } from "../validate";
 import { getPosts } from "./actions";
 
 export default function CommunityPageClient() {

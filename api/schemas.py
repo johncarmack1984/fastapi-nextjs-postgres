@@ -7,14 +7,14 @@ class CommentBase(BaseModel):
     text: str
     created_at: datetime
     num_hugs: int
+    parent_id: Optional[int] = None
+    post_id: int
 
 class CommentCreate(CommentBase):
-    pass
+    pass 
 
 class Comment(CommentBase):
     id: int
-    parent_id: Optional[int] = None
-    post_id: int
 
     class Config:
         from_attributes = True

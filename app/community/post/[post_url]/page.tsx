@@ -1,7 +1,7 @@
-import { selectPostSchema } from "@/app/validate";
 import { jsonArrayFrom } from "kysely/helpers/postgres";
 
 import db from "@/lib/db";
+import { SelectPostSchema, selectPostSchema } from "@/lib/validate/posts";
 import Post from "./post";
 
 export async function generateStaticParams() {
@@ -20,7 +20,7 @@ export default async function PostPage({
 }: {
   params: { post_url: string };
 }) {
-  const post = await db
+  const post: SelectPostSchema = await db
     .selectFrom("auxhealth_posts")
     .selectAll()
     .select((eb) => [
@@ -34,7 +34,7 @@ export default async function PostPage({
     ])
     .where("post_url", "=", decodeURIComponent(post_url))
     .limit(1)
-    .executeTakeFirst()
+    .executeTakeFirstOrThrow()
     .then(selectPostSchema.parseAsync);
   return <Post {...post} />;
 }

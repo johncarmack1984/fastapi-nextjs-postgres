@@ -34,18 +34,20 @@ const mdxBlockBadgeVariants = cva("w-fit capitalize", {
   },
 });
 
-const MDXClient = (mdxSchema: MdxSchema) => {
+const MDXClient = (mdxSchema?: MdxSchema) => {
   const routename = usePathname()
     .split("/")
     .findLast((x) => x);
-  if (mdxSchema.source.length === 0) return null;
+  if (!mdxSchema) return null;
+  if (!mdxSchema?.serialized) return null;
+  if (mdxSchema?.source?.length === 0) return null;
   const isPreview = routename === "community";
-  const { props } = mdxSchema.serialized.scope;
-  if ("error" in mdxSchema.serialized)
+  const { props } = mdxSchema?.serialized?.scope ?? { props: {} };
+  if ("error" in mdxSchema?.serialized)
     return (
       <>
-        <MdxError error={mdxSchema.serialized.error} />
-        <MdxSource source={mdxSchema.source} />
+        <MdxError error={mdxSchema?.serialized?.error} />
+        <MdxSource source={mdxSchema?.source} />
         <span className="right-corner-absolute-note">
           <Strong>Syntax Error</Strong>
         </span>
@@ -63,7 +65,7 @@ const MDXClient = (mdxSchema: MdxSchema) => {
         {props?.title}
       </Badge>
       <BaseMDXClient
-        {...mdxSchema.serialized}
+        {...mdxSchema?.serialized}
         components={mdxComponents}
         onError={MdxError}
       />

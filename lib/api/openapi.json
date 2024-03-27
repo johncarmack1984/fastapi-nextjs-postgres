@@ -572,6 +572,36 @@
           "id": {
             "type": "integer",
             "title": "Id"
+          }
+        },
+        "type": "object",
+        "required": [
+          "display_name",
+          "text",
+          "created_at",
+          "num_hugs",
+          "id"
+        ],
+        "title": "Comment"
+      },
+      "CommentCreate": {
+        "properties": {
+          "display_name": {
+            "type": "string",
+            "title": "Display Name"
+          },
+          "text": {
+            "type": "string",
+            "title": "Text"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "num_hugs": {
+            "type": "integer",
+            "title": "Num Hugs"
           },
           "parent_id": {
             "anyOf": [
@@ -595,37 +625,7 @@
           "text",
           "created_at",
           "num_hugs",
-          "id",
           "post_id"
-        ],
-        "title": "Comment"
-      },
-      "CommentCreate": {
-        "properties": {
-          "display_name": {
-            "type": "string",
-            "title": "Display Name"
-          },
-          "text": {
-            "type": "string",
-            "title": "Text"
-          },
-          "created_at": {
-            "type": "string",
-            "format": "date-time",
-            "title": "Created At"
-          },
-          "num_hugs": {
-            "type": "integer",
-            "title": "Num Hugs"
-          }
-        },
-        "type": "object",
-        "required": [
-          "display_name",
-          "text",
-          "created_at",
-          "num_hugs"
         ],
         "title": "CommentCreate"
       },

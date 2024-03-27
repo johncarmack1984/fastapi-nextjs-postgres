@@ -9,15 +9,15 @@ import {
   Comment as CommentType,
 } from "@/lib/api/client/requests";
 import { cn } from "@/lib/strings";
-import ButtonRow from "./button-row";
-import { HugButton } from "./buttons/hug-button";
-import ReplyButton from "./buttons/reply-button";
-import EngagementRow from "./engagement-row";
-import TimeAgo from "./time-ago";
-import { CardHeader } from "./ui/card";
-import Large from "./ui/typography/large";
-import P from "./ui/typography/p";
-import Strong from "./ui/typography/strong";
+import { SelectCommentSchema } from "@/lib/validate/comments";
+import ButtonRow from "../button-row";
+import { HugButton } from "../buttons/hug-button";
+import ReplyButton from "../buttons/reply-button";
+import EngagementRow from "../engagement-row";
+import TimeAgo from "../time-ago";
+import { CardHeader } from "../ui/card";
+import Large from "../ui/typography/large";
+import P from "../ui/typography/p";
 
 function Comment({
   id,
@@ -27,8 +27,7 @@ function Comment({
   parent_id,
   post_id,
   num_hugs,
-  ...comment
-}: CommentType) {
+}: SelectCommentSchema) {
   const queryKey: QueryKey = [useCommentsServiceReadCommentsKey, { id }];
   const data = { id, num_hugs };
 
@@ -45,7 +44,7 @@ function Comment({
     <article
       key={`comment-${id}`}
       className={cn(
-        "m-0 p-0 [&:not(:first-child)]:mt-5",
+        "m-0 p-0 [&:not(:first-child)]:mt-3",
         parent_id && "border-l-4 border-blue-600 pl-4",
       )}
     >
@@ -62,7 +61,7 @@ function Comment({
             id={id}
             mutationFn={CommentsService.hugComment}
             queryKey={queryKey}
-            className="m-0 p-0"
+            className="-ml-[10px]"
           />
           <ReplyButton />
         </ButtonRow>

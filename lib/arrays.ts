@@ -1,6 +1,9 @@
-import { type Comment as CommentType } from "@/lib/api/client/requests";
+import { SelectCommentSchema } from "@/lib/validate/comments";
 
-export const childrenAfterTheirParent = (a: CommentType, b: CommentType) => {
+export const childrenAfterTheirParent = (
+  a: SelectCommentSchema,
+  b: SelectCommentSchema,
+) => {
   if (a.parent_id === null && b.parent_id === null) {
     return a.id - b.id;
   } else if (a.parent_id === null) {

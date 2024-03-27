@@ -1,14 +1,15 @@
 "use client";
 
-import { SelectPostSchema } from "@/app/validate";
 import { useQueryClient } from "@tanstack/react-query";
 
 import type { QueryKey } from "@/lib/api/api";
 import { usePostsServiceReadPostKey } from "@/lib/api/client/queries";
 import { PostsService } from "@/lib/api/client/requests";
 import { childrenAfterTheirParent } from "@/lib/arrays";
+import { SelectPostSchema } from "@/lib/validate/posts";
 import { HugButton } from "@/components/buttons/hug-button";
-import Comment from "@/components/comment";
+import Comment from "@/components/comments/comment";
+import CommentForm from "@/components/comments/comment-form";
 import EngagementRow from "@/components/engagement-row";
 import MDXClient from "@/components/mdx/mdx-client";
 import TimeAgo from "@/components/time-ago";
@@ -46,9 +47,20 @@ export default function Post({
     { ...assessment },
   ];
 
+  const consoleWarn = console.warn;
+  const SUPPRESSED_WARNINGS = [
+    "Accessing element.ref is no longer supported. ref is now a regular prop.",
+  ];
+
+  console.warn = function filterWarnings(msg, ...args) {
+    if (!SUPPRESSED_WARNINGS.some((entry) => msg.includes(entry))) {
+      consoleWarn(msg, ...args);
+    }
+  };
+
   return (
     <PostAndComments>
-      <Card className="rounded-lg bg-white p-6 shadow">
+      <Card className="rounded-lg bg-white p-2 shadow">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">{title}</CardTitle>
           <TimeAgo date={created_at} />
@@ -57,7 +69,7 @@ export default function Post({
           {mdxBlocks.map(MDXClient)}
         </CardContent>
         <EngagementRow>
-          <CardDescription>
+          <CardDescription className="p-1">
             <HugButton
               id={id}
               mutationFn={PostsService.hugPost}
@@ -66,8 +78,9 @@ export default function Post({
           </CardDescription>
         </EngagementRow>
       </Card>
-      <Card className="p-6">
+      <Card className="">
         <CardHeader>
+          {/* <CommentForm post_id={id} parent_id={null} /> */}
           <CardDescription>{comments?.length ?? 0} comments</CardDescription>
         </CardHeader>
         <CardContent className="">

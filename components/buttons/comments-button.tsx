@@ -1,8 +1,9 @@
 import { Comment as CommentType } from "@/lib/api/client/requests";
+import { SelectCommentSchema } from "@/lib/validate/comments";
 import { ReplyIcon } from "@/components/icons/reply-icon";
 import { AccordionTrigger } from "@/components/ui/accordion";
 
-function CommentsButton({ comments }: { comments?: CommentType[] }) {
+function CommentsButton({ comments }: { comments?: SelectCommentSchema[] }) {
   comments = comments || [];
   const enabled = comments.length;
   return (
