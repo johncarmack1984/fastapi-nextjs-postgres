@@ -21,6 +21,18 @@ export const $Comment = {
             type: 'number',
             isRequired: true,
         },
+        parent_id: {
+            type: 'any-of',
+            contains: [{
+                type: 'number',
+            }, {
+                type: 'null',
+            }],
+        },
+        post_id: {
+            type: 'number',
+            isRequired: true,
+        },
         id: {
             type: 'number',
             isRequired: true,

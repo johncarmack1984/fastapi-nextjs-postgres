@@ -569,6 +569,21 @@
             "type": "integer",
             "title": "Num Hugs"
           },
+          "parent_id": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Parent Id"
+          },
+          "post_id": {
+            "type": "integer",
+            "title": "Post Id"
+          },
           "id": {
             "type": "integer",
             "title": "Id"
@@ -580,6 +595,7 @@
           "text",
           "created_at",
           "num_hugs",
+          "post_id",
           "id"
         ],
         "title": "Comment"
