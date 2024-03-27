@@ -67,7 +67,7 @@ export function PostPreview({
         </EngagementRow>
         <AccordionContent className=" border-t-[1px] border-solid border-border/50 bg-white pt-3 shadow">
           {comments?.sort(childrenAfterTheirParent).map(Comment)}
-          {/* <CommentForm post_id={id} parent_id={null} /> */}
+          <CommentForm post_id={id} parent_id={null} />
         </AccordionContent>
       </AccordionItem>
     </Accordion>

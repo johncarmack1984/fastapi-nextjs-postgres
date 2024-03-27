@@ -35,8 +35,8 @@ export default function CommentForm({
   post_id,
   parent_id,
 }: {
-  post_id: number;
-  parent_id: number;
+  post_id: InsertCommentSchema["post_id"];
+  parent_id: InsertCommentSchema["parent_id"];
 }) {
   const queryClient = useQueryClient();
 
@@ -49,12 +49,12 @@ export default function CommentForm({
         title: "An error occurred when adding your comment:",
         description: (
           <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-            {/* <Code className="text-white">{JSON.stringify(error, null, 2)}</Code> */}
+            <Code className="text-white">{JSON.stringify(error, null, 2)}</Code>
             <Code className="text-white">
-              {/* {JSON.stringify(variables, null, 2)} */}
+              {JSON.stringify(variables, null, 2)}
             </Code>
             <Code className="text-white">
-              {/* {JSON.stringify(context, null, 2)} */}
+              {JSON.stringify(context, null, 2)}
             </Code>
           </pre>
         ),
@@ -78,9 +78,21 @@ export default function CommentForm({
       );
     },
   });
+
+  function onSubmit(data: z.infer<typeof insertCommentSchema>) {
+    toast({
+      title: "You submitted the following values:",
+      description: (
+        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
+          <Code className="text-white">{JSON.stringify(data, null, 2)}</Code>
+        </pre>
+      ),
+    });
+  }
+
   const form = useForm<z.infer<typeof insertCommentSchema>>({
     resolver: zodResolver(insertCommentSchema),
-    values: {
+    defaultValues: {
       display_name: "",
       text: "",
       post_id,
@@ -90,36 +102,21 @@ export default function CommentForm({
     },
   });
 
-  function onSubmit(data: z.infer<typeof insertCommentSchema>) {
-    toast({
-      title: "You submitted the following values:",
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          {/* <Code className="text-white">{JSON.stringify(data, null, 2)}</Code> */}
-        </pre>
-      ),
-    });
-  }
-
   return (
     <Form {...form}>
       <Lead className=" !mb-0 mt-5 !pb-0 ">Leave a comment</Lead>
       <form
         onSubmit={form.handleSubmit(onSubmit)}
-        className="-px-2w-full space-y-4"
+        className="w-full space-y-4 px-2"
       >
         <FormField
           control={form.control}
           name="display_name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
               <FormControl>
                 <Input placeholder="What's your name?" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -129,9 +126,6 @@ export default function CommentForm({
           name="text"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="!my-0 !py-0" htmlFor="text">
-                Comment
-              </FormLabel>
               <FormControl>
                 <Textarea
                   placeholder="What's on your mind?'"
@@ -139,12 +133,9 @@ export default function CommentForm({
                   {...field}
                 />
               </FormControl>
-              <FormDescription className="flex justify-between">
-                Leave a comment so others can learn from your insights.
-                <Button variant="secondary" type="submit">
-                  Submit
-                </Button>
-              </FormDescription>
+              <Button variant="secondary" type="submit">
+                Submit
+              </Button>
               <FormMessage />
             </FormItem>
           )}

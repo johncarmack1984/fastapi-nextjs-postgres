@@ -80,7 +80,7 @@ export default function Post({
       </Card>
       <Card className="">
         <CardHeader>
-          {/* <CommentForm post_id={id} parent_id={null} /> */}
+          <CommentForm post_id={id} parent_id={null} />
           <CardDescription>{comments?.length ?? 0} comments</CardDescription>
         </CardHeader>
         <CardContent className="">
