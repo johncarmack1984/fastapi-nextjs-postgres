@@ -10,7 +10,7 @@ export async function generateStaticParams() {
     .select(["post_url"])
     .execute();
 
-  return post_urls.map(({ post_url }) => ({
+  return post_urls.slice(0, 10).map(({ post_url }) => ({
     post_url,
   }));
 }

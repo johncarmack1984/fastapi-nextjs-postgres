@@ -41,23 +41,6 @@ export default function Post({
   const queryClient = useQueryClient();
   queryClient.setQueryData(queryKey, data);
 
-  const mdxBlocks = [
-    { ...question },
-    { ...patient_description },
-    { ...assessment },
-  ];
-
-  const consoleWarn = console.warn;
-  const SUPPRESSED_WARNINGS = [
-    "Accessing element.ref is no longer supported. ref is now a regular prop.",
-  ];
-
-  console.warn = function filterWarnings(msg, ...args) {
-    if (!SUPPRESSED_WARNINGS.some((entry) => msg.includes(entry))) {
-      consoleWarn(msg, ...args);
-    }
-  };
-
   return (
     <PostAndComments>
       <Card className="rounded-lg bg-white p-2 shadow">
@@ -66,7 +49,9 @@ export default function Post({
           <TimeAgo date={created_at} />
         </CardHeader>
         <CardContent className="flex flex-col gap-4">
-          {mdxBlocks.map(MDXClient)}
+          {[{ ...question }, { ...patient_description }, { ...assessment }].map(
+            MDXClient,
+          )}
         </CardContent>
         <EngagementRow>
           <CardDescription className="p-1">
@@ -84,7 +69,7 @@ export default function Post({
           <CardDescription>{comments?.length ?? 0} comments</CardDescription>
         </CardHeader>
         <CardContent className="">
-          {comments?.sort(childrenAfterTheirParent).map(Comment)}
+          {/* {comments?.sort(childrenAfterTheirParent).map(Comment)} */}
         </CardContent>
       </Card>
     </PostAndComments>
