@@ -53,9 +53,13 @@ const MDXClient = (mdxSchema?: MdxSchema) => {
         </span>
       </>
     );
+  const key = mdxSchema?.source
+    .substring(0, 15)
+    .replace(/\s/g, "")
+    .toLowerCase();
   return (
     <article
-      key={`mdx-block-${routename}`}
+      key={`mdx-block-${routename}-${key}`}
       className={cn(mdxBlockVariants({ isPreview }))}
     >
       <Badge

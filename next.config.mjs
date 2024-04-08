@@ -12,17 +12,17 @@ const nextConfig = {
     mdxRs: true,
   },
   reactStrictMode: true,
-  /** @param config {any} */
-  webpack: (config) => {
-    if (config.name === "server") config.optimization.concatenateModules = true;
+  // /** @param config {any} */
+  // webpack: (config) => {
+  //   if (config.name === "server") config.optimization.concatenateModules = true;
 
-    config.resolve.alias = {
-      ...config.resolve.alias,
-      "@": resolve(__dirname, "./"),
-    };
+  //   config.resolve.alias = {
+  //     ...config.resolve.alias,
+  //     "@": resolve(__dirname, "./"),
+  //   };
 
-    return config;
-  },
+  //   return config;
+  // },
   redirects: async () => {
     return [
       {
@@ -41,24 +41,15 @@ const nextConfig = {
     return [
       {
         source: "/api/:path*",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/api/:path*"
-            : "/api/",
+        destination: `${process.env.PROTOCOL}://${process.env.VERCEL_URL}/api/:path*`,
       },
       {
         source: "/docs",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/docs"
-            : "/api/docs",
+        destination: `${process.env.PROTOCOL}://${process.env.VERCEL_URL}/api/docs`,
       },
       {
         source: "/openapi.json",
-        destination:
-          process.env.NODE_ENV === "development"
-            ? "http://127.0.0.1:8000/openapi.json"
-            : "/api/openapi.json",
+        destination: `${process.env.PROTOCOL}://${process.env.VERCEL_URL}/api/openapi.json`,
       },
     ];
   },

@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { Frontmatter } from "./mdx";
 import { recmaPlugins } from "./recma";
-import { code, rehypePlugins } from "./rehype";
+import { rehypePlugins } from "./rehype";
 import { remarkPlugins } from "./remark";
 
 interface AuxHealthSerializeOptions extends SerializeOptions {
@@ -18,7 +18,7 @@ function makeOptions(props?: Frontmatter): AuxHealthSerializeOptions {
       remarkPlugins,
       rehypePlugins,
       recmaPlugins,
-      remarkRehypeOptions: { handlers: { code } },
+      remarkRehypeOptions: { handlers: {} },
       development: process.env.NODE_ENV === "development",
     },
   };
