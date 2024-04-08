@@ -10,7 +10,7 @@ import Post from "./post";
 //     .select(["post_url"])
 //     .execute();
 
-//   return post_urls.slice(0, 10).map(({ post_url }) => ({
+//   return post_urls.map(({ post_url }) => ({
 //     post_url,
 //   }));
 // }
@@ -20,21 +20,22 @@ export default async function PostPage({
 }: {
   params: { post_url: string };
 }) {
-  const post: SelectPostSchema = await db
-    .selectFrom("auxhealth_posts")
-    .selectAll()
-    .select((eb) => [
-      jsonArrayFrom(
-        eb
-          .selectFrom("auxhealth_comments")
-          .selectAll()
-          .whereRef("auxhealth_posts.id", "=", "auxhealth_comments.post_id")
-          .orderBy("created_at", "desc"),
-      ).as("comments"),
-    ])
-    .where("post_url", "=", decodeURIComponent(post_url))
-    .limit(1)
-    .executeTakeFirstOrThrow()
-    .then(selectPostSchema.parseAsync);
-  return <Post {...post} />;
+  // const post: SelectPostSchema = await db
+  //   .selectFrom("auxhealth_posts")
+  //   .selectAll()
+  //   .select((eb) => [
+  //     jsonArrayFrom(
+  //       eb
+  //         .selectFrom("auxhealth_comments")
+  //         .selectAll()
+  //         .whereRef("auxhealth_posts.id", "=", "auxhealth_comments.post_id")
+  //         .orderBy("created_at", "desc"),
+  //     ).as("comments"),
+  //   ])
+  //   .where("post_url", "=", decodeURIComponent(post_url))
+  //   .limit(1)
+  //   .executeTakeFirstOrThrow()
+  //   .then(selectPostSchema.parseAsync);
+  // return <Post {...post} />;
+  return <>post</>;
 }

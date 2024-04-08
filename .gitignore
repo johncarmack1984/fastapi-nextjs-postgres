@@ -37,5 +37,4 @@ next-env.d.ts
 .dev
 .env
 
-__pycache__
 venv
